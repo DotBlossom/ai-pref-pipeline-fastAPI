@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
 import requests
-import os, json
-import pymongo
+import os
 from dotenv import load_dotenv
 from typing import List
 import motor.motor_asyncio

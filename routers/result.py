@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
-import pymongo
+
 from dotenv import load_dotenv
 import os
 from typing import List, Dict

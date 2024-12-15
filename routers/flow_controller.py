@@ -1,10 +1,10 @@
 import boto3
-import json
+
 from botocore.exceptions import ClientError
 import requests
 from fastapi import APIRouter, Request, HTTPException, BackgroundTasks, Depends
 from fastapi.responses import JSONResponse
-import pymongo
+
 from dotenv import load_dotenv
 import os
 from typing import Dict

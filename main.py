@@ -1,12 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from result import result_router # Assuming you've adapted these to FastAPI routers
-from user_actions import user_actions_router
-from inference import inference_router
-from data_resolver import data_resolver_router
-from flow_controller import flow_controller_router
-from mongo import mongo_router
+from routers.result import result_router 
+from routers.user_actions import user_actions_router
+from routers.inference import inference_router
+from routers.data_resolver import data_resolver_router
+from routers.flow_controller import flow_controller_router
+from routers.mongo import mongo_router
 app = FastAPI()
 
 # CORS configuration
@@ -21,13 +21,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(result_router, prefix="/ai-api/preference")
-app.include_router(user_actions_router, prefix="/ai-api/user")
-app.include_router(inference_router, prefix="/ai-api/invoke")
-app.include_router(data_resolver_router, prefix="/ai-api/metadata")
-app.include_router(flow_controller_router, prefix="/ai-api/bedrock")
-app.include_router(mongo_router, prefix="/ai-api/mongo")
+api_router = APIRouter(prefix="/ai-api")
+
+## Include routers
+api_router.include_router(result_router, prefix="/preference")
+api_router.include_router(user_actions_router, prefix="/user")
+api_router.include_router(inference_router, prefix="/invoke")
+api_router.include_router(data_resolver_router, prefix="/metadata")
+api_router.include_router(flow_controller_router, prefix="/bedrock")
+api_router.include_router(mongo_router, prefix="/mongo")
+
+app.include_router(api_router)
+
+
+## EOL
 # Health check route
 @app.get("/")
 async def home():
